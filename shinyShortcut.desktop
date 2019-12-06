@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=shinyShortcut
+Comment=Run Shiny App
+Exec=/Users/alejandro/pm_toolkit/.shiny_run/shinyShortcut.r
+Terminal=false
+Type=Application

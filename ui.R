@@ -8,25 +8,56 @@
 #
 
 library(shiny)
+library(shinyWidgets)
+library(shinyjs)
 library(tidyverse)
 library(data.table)
-source('source/update_prize_tent.R')
+source("source/update_prize_tent.R")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
+  shinyjs::useShinyjs(),
+  shiny::includeCSS("www/animate.css"),
 
-    # Application title
-    titlePanel("PM Balance Data Toolkit"),
+  tags$head(
+    tags$link(href = "https://fonts.googleapis.com/css?family=Fjalla+One|Roboto+Slab:300,400&display=swap", rel = "stylesheet"),
+    tags$link(href = "styles.css", rel = "stylesheet", type = "text/css")
+  ),
 
-    # Sidebar with a slider input for number of bins
-    sidebarLayout(
+  tags$div(
+    class = "title",
+    tags$br(),
+    tags$h1("Balance Data Toolkit", class = "title"),
+    tags$br(),
+
+    tags$span(icon("bolt"), class = "main-icon")
+  ),
+  
+  tags$style(HTML("
+        .tabs-above > .nav > li[class=active] > a {
+           background-color: #000;
+           color: #FFF;
+        }")),
+
+  verticalTabsetPanel(
+    verticalTabPanel("PrizeTent", fluid = TRUE, box_height = "70px", color = '#b2ba11',
+      sidebarLayout(
         sidebarPanel(
-            actionButton('button.update_prize_tent', 'Update Prize Tent')
+          textInput("prize_tent.text.spreadsheet_name", "Spreadsheet Name", value = "(HS) Mysteryboxes"),
+          selectInput("prize_tent.combobox.game_location", "Game Folder Name", choices = c("homestreet", "spark")),
+          actionButton("prize_tent.button.update_prize_tent", "Update Prize Tent")
         ),
-
-        # Show a plot of the generated distribution
         mainPanel(
-            "Hello World"
+          shinyjs::hidden(
+            div(
+              id = "loading_page",
+              class = "loading-content",
+              h2(class = "animated infinite pulse", "Loading data..."),
+              align = "center"
+            )
+          )
         )
+      )
     )
+  )
 ))

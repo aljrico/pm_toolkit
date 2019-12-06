@@ -27,10 +27,11 @@ update_prize_tent <- function(spreadsheet_name = "(HS) Mysteryboxes", spreadshee
   
   # mysteryboxes ------------------------------------------------------------
   
-  csv_location <- paste0('~/', game_folder,'/Assets/data/source/csv/prizetentmysteryboxes.csv')
+  csv_location <- paste0('~/', game_folder, '/Assets/data/source/csv/prizetentmysteryboxes.csv')
+  csv_link <- 'https://raw.githubusercontent.com/supersolid/spark/master/Assets/data/source/csv/prizetentmysteryboxes.csv?token=AEKOLXMZA3HL6IIQV2Z3YAS5P5XMG'
   
   original_csv <- 
-    data.table::fread(csv_location) %>% 
+    data.table::fread(csv_link) %>% 
     dplyr::mutate_if(is.logical, as.numeric) %>% 
     data.table::data.table()
   csv <- original_csv
@@ -147,6 +148,7 @@ update_prize_tent <- function(spreadsheet_name = "(HS) Mysteryboxes", spreadshee
   # prod ----------------------------------------------------------
   
   csv_location <- paste0('~/', game_folder, '/Assets/data/source/csv/prizetent_prod.csv')
+  csv_link <- 'https://raw.githubusercontent.com/supersolid/spark/master/Assets/data/source/csv/prizetent_prod.csv?token=AEKOLXMZA3HL6IIQV2Z3YAS5P5XMG'
   
   original_csv <- data.table::fread(csv_location) %>% dplyr::mutate_if(is.logical, as.numeric) %>% data.table::data.table()
   csv <- original_csv
